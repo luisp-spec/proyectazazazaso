@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taller Barro Azul · Cerámica a mano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fondo: #E8EBEE;
+    --papel: #F6F7F8;
+    --tinta: #1D2832;
+    --suave: #55636E;
+    --linea: #C4CBD2;
+    --esmalte: #2F4B9B;
+    --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+    --texto: "Source Serif 4", Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--fondo);
+    color: var(--tinta);
+    font-family: var(--texto);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--esmalte); outline-offset: 3px; }
+
+  header, main > section, footer {
+    width: min(1080px, 100% - 2.5rem);
+    margin-inline: auto;
+  }
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 0; gap: 1rem; flex-wrap: wrap;
+  }
+  .marca { font-family: var(--display); font-weight: 800; font-size: 1.3rem; text-decoration: none; }
+  nav { display: flex; gap: 1.5rem; font-family: var(--display); font-weight: 500; font-size: 1rem; }
+  nav a { text-decoration: none; padding: .25rem 0; border-bottom: 2px solid transparent; }
+  nav a:hover { border-color: var(--esmalte); }
+
+  /* Hero */
+  .hero {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem;
+    align-items: center; padding: 3rem 0 5rem;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 1.02; letter-spacing: -0.02em;
+  }
+  .hero p { margin-top: 1.5rem; max-width: 34rem; color: var(--suave); }
+  .boton {
+    display: inline-block; margin-top: 2rem; padding: .85rem 1.6rem;
+    background: var(--tinta); color: var(--papel); text-decoration: none;
+    font-family: var(--display); font-weight: 700; border-radius: 4px;
+    transition: background .2s;
+  }
+  .boton:hover { background: var(--esmalte); }
+
+  .vitrina { text-align: center; }
+  .vitrina svg { width: min(340px, 80%); height: auto; display: block; margin: 0 auto; }
+  .vaso-cuerpo { fill: var(--esmalte); transition: fill .45s ease; }
+  .esmaltes { display: flex; justify-content: center; gap: .75rem; margin-top: 1.25rem; border: 0; }
+  .esmaltes legend { font-family: var(--display); font-weight: 500; font-size: .95rem; color: var(--suave); margin: 0 auto .6rem; }
+  .esmaltes label { cursor: pointer; }
+  .esmaltes input { position: absolute; opacity: 0; }
+  .esmaltes span {
+    display: block; width: 2.4rem; height: 2.4rem; border-radius: 50%;
+    background: var(--c); border: 3px solid var(--fondo);
+    box-shadow: 0 0 0 1.5px var(--linea); transition: box-shadow .2s, transform .2s;
+  }
+  .esmaltes input:checked + span { box-shadow: 0 0 0 3px var(--tinta); transform: scale(1.08); }
+  .esmaltes input:focus-visible + span { outline: 3px solid var(--esmalte); outline-offset: 4px; }
+  #nombre-esmalte { margin-top: .8rem; font-style: italic; color: var(--suave); min-height: 1.6em; }
+
+  /* Talleres */
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; }
+  .talleres { padding: 3rem 0; }
+  .talleres ul { list-style: none; margin-top: 2rem; border-top: 1px solid var(--linea); }
+  .talleres li {
+    display: grid; grid-template-columns: 1fr 2fr auto; gap: 1.5rem;
+    padding: 1.5rem 0; border-bottom: 1px solid var(--linea); align-items: baseline;
+  }
+  .talleres h3 { font-family: var(--display); font-weight: 700; font-size: 1.3rem; }
+  .talleres p { color: var(--suave); }
+  .precio { font-family: var(--display); font-weight: 700; white-space: nowrap; }
+
+  /* Horarios + contacto */
+  .reserva {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+    padding: 3rem; margin-block: 3rem; background: var(--papel); border-radius: 6px;
+  }
+  table { width: 100%; border-collapse: collapse; margin-top: 1.25rem; font-size: 1rem; }
+  th, td { text-align: left; padding: .6rem 0; border-bottom: 1px solid var(--linea); }
+  th { font-family: var(--display); font-weight: 500; }
+  form { display: grid; gap: 1rem; margin-top: 1.25rem; }
+  label.campo { display: grid; gap: .3rem; font-family: var(--display); font-weight: 500; font-size: .95rem; }
+  input[type=text], input[type=email], select {
+    font: inherit; font-family: var(--texto); padding: .7rem .8rem;
+    border: 1.5px solid var(--linea); border-radius: 4px; background: #fff; color: var(--tinta);
+  }
+  form button {
+    font: inherit; font-family: var(--display); font-weight: 700; cursor: pointer;
+    padding: .85rem; border: 0; border-radius: 4px; background: var(--tinta); color: var(--papel);
+  }
+  form button:hover { background: var(--esmalte); }
+  #confirmacion { min-height: 1.6em; font-weight: 600; color: var(--esmalte); }
+
+  footer { padding: 2rem 0 3rem; color: var(--suave); font-size: .95rem; }
+
+  @media (max-width: 800px) {
+    .hero, .reserva { grid-template-columns: 1fr; }
+    .reserva { padding: 1.75rem; }
+    .talleres li { grid-template-columns: 1fr; gap: .4rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="marca" href="#">Barro Azul</a>
+  <nav aria-label="Principal">
+    <a href="#talleres">Talleres</a>
+    <a href="#reserva">Reservar</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <h1>Un jarrón hecho por tus manos, en una tarde.</h1>
+      <p>En nuestro taller aprendes a levantar, modelar y esmaltar piezas de cerámica. No necesitas experiencia: te prestamos el torno, la arcilla y el delantal.</p>
+      <a class="boton" href="#reserva">Reservar un lugar</a>
+    </div>
+
+    <div class="vitrina">
+      <svg viewBox="0 0 200 260" role="img" aria-label="Jarrón de cerámica que cambia de color según el esmalte elegido">
+        <ellipse cx="100" cy="248" rx="62" ry="7" fill="#1D2832" opacity=".12"/>
+        <path class="vaso-cuerpo" d="M82 20 h36 q4 0 4 5 v14 q0 10 14 24 q26 26 26 70 q0 52 -24 82 q-6 8 -16 8 h-64 q-10 0 -16 -8 q-24 -30 -24 -82 q0 -44 26 -70 q14 -14 14 -24 v-14 q0 -5 4 -5z"/>
+        <path d="M70 60 q-18 24 -18 60 q0 44 14 74" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".28"/>
+        <path d="M44 150 q56 14 112 0" fill="none" stroke="#1D2832" stroke-width="2" opacity=".18"/>
+      </svg>
+
+      <fieldset class="esmaltes">
+        <legend>Elige el esmalte</legend>
+        <label><input type="radio" name="esmalte" value="#2F4B9B" data-nombre="Cobalto" checked><span style="--c:#2F4B9B" title="Cobalto"></span><span class="sr" hidden>Cobalto</span></label>
+        <label><input type="radio" name="esmalte" value="#C8963E" data-nombre="Ocre miel"><span style="--c:#C8963E" title="Ocre miel"></span></label>
+        <label><input type="radio" name="esmalte" value="#8FB59C" data-nombre="Celadón"><span style="--c:#8FB59C" title="Celadón"></span></label>
+        <label><input type="radio" name="esmalte" value="#7A2E36" data-nombre="Vino"><span style="--c:#7A2E36" title="Vino"></span></label>
+        <label><input type="radio" name="esmalte" value="#2B2F36" data-nombre="Grafito"><span style="--c:#2B2F36" title="Grafito"></span></label>
+      </fieldset>
+      <p id="nombre-esmalte" aria-live="polite">Cobalto</p>
+    </div>
+  </section>
+
+  <section class="talleres" id="talleres">
+    <h2>Tres formas de empezar</h2>
+    <ul>
+      <li>
+        <h3>Primer torno</h3>
+        <p>Centras la arcilla y levantas un cuenco o un vaso. Te llevas la pieza esmaltada a las dos semanas.</p>
+        <span class="precio">S/ 90</span>
+      </li>
+      <li>
+        <h3>Modelado a mano</h3>
+        <p>Trabajas con churros y planchas para hacer macetas y platos. Sin torno, ideal para ir con calma.</p>
+        <span class="precio">S/ 70</span>
+      </li>
+      <li>
+        <h3>Esmaltado libre</h3>
+        <p>Traes una pieza ya cocida y la decoras con nuestros esmaltes. Dura una hora y media.</p>
+        <span class="precio">S/ 45</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="reserva" id="reserva">
+    <div>
+      <h2>Horarios</h2>
+      <table>
+        <tr><th>Martes y jueves</th><td>6:00 – 8:30 p. m.</td></tr>
+        <tr><th>Sábado</th><td>10:00 a. m. – 1:00 p. m.</td></tr>
+        <tr><th>Domingo</th><td>Esmaltado libre, 3:00 – 5:00 p. m.</td></tr>
+      </table>
+      <p style="margin-top:1.25rem;color:var(--suave);font-size:1rem;">Grupos de máximo 8 personas, para que cada una tenga su torno.</p>
+    </div>
+
+    <div>
+      <h2>Reserva tu lugar</h2>
+      <form id="form-reserva">
+        <label class="campo">Nombre
+          <input type="text" name="nombre" required autocomplete="name">
+        </label>
+        <label class="campo">Correo
+          <input type="email" name="correo" required autocomplete="email">
+        </label>
+        <label class="campo">Taller
+          <select name="taller">
+            <option>Primer torno</option>
+            <option>Modelado a mano</option>
+            <option>Esmaltado libre</option>
+          </select>
+        </label>
+        <button type="submit">Reservar lugar</button>
+        <p id="confirmacion" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>Taller Barro Azul · Página de ejemplo</footer>
+
+<script>
+  // Cambia el color del jarrón según el esmalte elegido
+  const jarron = document.querySelector('.vaso-cuerpo');
+  const nombre = document.getElementById('nombre-esmalte');
+  document.querySelectorAll('input[name="esmalte"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      jarron.style.fill = radio.value;
+      nombre.textContent = radio.dataset.nombre;
+    });
+  });
+
+  // Confirmación de reserva (no envía datos a ningún servidor)
+  document.getElementById('form-reserva').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const datos = new FormData(e.target);
+    document.getElementById('confirmacion').textContent =
+      'Listo, ' + datos.get('nombre') + '. Reservaste "' + datos.get('taller') + '". Te escribiremos a ' + datos.get('correo') + '.';
+    e.target.reset();
+  });
+</script>
+</body>
+</html>
